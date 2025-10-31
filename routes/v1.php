@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\branchController;
+use App\Http\Controllers\V1\BrandController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\SubCategoryController;
@@ -54,5 +55,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/deactivate', [SubCategoryController::class, 'deactivateSubCategory']);
         Route::get('main-category/{mainCategoryId}', [SubCategoryController::class, 'getByMainCategory']);
         Route::get('active/list', [SubCategoryController::class, 'getActiveSubCategories']);
+    });
+
+    Route::apiResource('brands', BrandController::class);
+    Route::prefix('brands')->group(function () {
+        Route::delete('{id}/force', [BrandController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [BrandController::class, 'restore']);
+        Route::patch('{id}/activate', [BrandController::class, 'activateBrand']);
+        Route::patch('{id}/deactivate', [BrandController::class, 'deactivateBrand']);
+        Route::get('active/list', [BrandController::class, 'getActiveBrands']);
     });
 });

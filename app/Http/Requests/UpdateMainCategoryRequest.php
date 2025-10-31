@@ -32,13 +32,13 @@ class UpdateMainCategoryRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('main_categories', 'name')->ignore($categoryId)
+                "unique:main_categories,name,{$categoryId}"
             ],
             'slug' => [
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('main_categories', 'slug')->ignore($categoryId)
+                "unique:main_categories,slug,{$categoryId}"
             ],
             'description' => 'nullable|string|max:1000',
             'is_active' => 'sometimes|boolean'

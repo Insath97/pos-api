@@ -5,9 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class UpdateSubCategoryRequest extends FormRequest
+class CreateBrandRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,25 +23,11 @@ class UpdateSubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $subCategoryId = $this->route('sub_category');
-
         return [
-            'main_category_id' => 'sometimes|required|exists:main_categories,id',
-            'name' => [
-                'sometimes',
-                'required',
-                'string',
-                'max:255',
-                "unique:sub_categories,name,{$subCategoryId}"
-            ],
-            'slug' => [
-                'nullable',
-                'string',
-                'max:255',
-                "unique:sub_categories,slug,{$subCategoryId}"
-            ],
+            'name' => 'required|string|max:255|unique:brands,name',
+            'slug' => 'nullable|string|max:255|unique:brands,slug',
             'description' => 'nullable|string|max:1000',
-            'is_active' => 'sometimes|boolean'
+            'is_active' => 'boolean'
         ];
     }
 
