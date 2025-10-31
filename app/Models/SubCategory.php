@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MainCategory extends Model
+class SubCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'main_category_id',
         'name',
         'slug',
         'description',
@@ -22,9 +23,9 @@ class MainCategory extends Model
         'deleted_at' => 'datetime'
     ];
 
-    public function subCategories()
+    public function mainCategory()
     {
-        return $this->hasMany(SubCategory::class);
+        return $this->belongsTo(MainCategory::class);
     }
 
     public function scopeActive($query)
@@ -32,10 +33,16 @@ class MainCategory extends Model
         return $query->where('is_active', true);
     }
 
+    public function scopeByMainCategory($query, $mainCategoryId)
+    {
+        return $query->where('main_category_id', $mainCategoryId);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('name', 'LIKE', "%{$search}%")
-            ->orWhere('description', 'LIKE', "%{$search}%");
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->orWhere('slug', 'LIKE', "%{$search}%");
     }
 
     public function activate()

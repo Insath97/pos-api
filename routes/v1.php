@@ -4,6 +4,7 @@ use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\branchController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\OrganizationController;
+use App\Http\Controllers\V1\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,5 +44,15 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [MainCategoryController::class, 'activateMainCategory']);
         Route::patch('{id}/deactivate', [MainCategoryController::class, 'deactivateMainCategory']);
         Route::get('active/list', [MainCategoryController::class, 'getActiveCategories']);
+    });
+
+    Route::apiResource('sub-categories', SubCategoryController::class);
+    Route::prefix('sub-categories')->group(function () {
+        Route::delete('{id}/force', [SubCategoryController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [SubCategoryController::class, 'restore']);
+        Route::patch('{id}/activate', [SubCategoryController::class, 'activateSubCategory']);
+        Route::patch('{id}/deactivate', [SubCategoryController::class, 'deactivateSubCategory']);
+        Route::get('main-category/{mainCategoryId}', [SubCategoryController::class, 'getByMainCategory']);
+        Route::get('active/list', [SubCategoryController::class, 'getActiveSubCategories']);
     });
 });
