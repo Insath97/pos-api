@@ -6,38 +6,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Organization extends Model
+class MainCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'code',
-        'logo',
-        'email',
-        'phone',
-        'website',
-        'address',
-        'city',
-        'is_active',
-        'is_multi_branch'
+        'slug',
+        'description',
+        'is_active'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
-        'is_multi_branch' => 'boolean',
         'deleted_at' => 'datetime'
     ];
 
-    // Relationships
-    public function branches()
+    public function scopeActive($query)
     {
-        return $this->hasMany(Branch::class);
+        return $query->where('is_active', true);
     }
 
-    public function users()
+    public function scopeSearch($query, $search)
     {
-        return $this->hasMany(User::class);
+        return $query->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%");
     }
 
     public function activate()

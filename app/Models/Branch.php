@@ -41,6 +41,11 @@ class Branch extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function activate()
     {
         $this->update(['is_active' => true]);

@@ -1,28 +1,47 @@
 <?php
 
+use App\Http\Controllers\V1\AuthController;
+use App\Http\Controllers\V1\branchController;
+use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('v1')->group(function () {
 
+    Route::post('login', [AuthController::class, 'login']);
+});
+
+Route::middleware('auth:api')->prefix('v1')->group(function () {
+
+    Route::post('logout', [AuthController::class, 'logout']);
+
     Route::apiResource('organizations', OrganizationController::class);
-    // Additional custom routes
     Route::prefix('organizations')->group(function () {
-        // Force delete (permanent deletion)
         Route::delete('{id}/force', [OrganizationController::class, 'forceDestroy']);
-
-        // Restore soft-deleted
         Route::patch('{id}/restore', [OrganizationController::class, 'restore']);
-
-        // Logo management
         Route::delete('{id}/logo', [OrganizationController::class, 'removeLogo']);
         Route::patch('{id}/logo', [OrganizationController::class, 'updateLogo']);
-
-        // Status management
         Route::patch('{id}/activate', [OrganizationController::class, 'activateOrganization']);
         Route::patch('{id}/deactivate', [OrganizationController::class, 'deactivateOrganization']);
     });
-});
 
-Route::middleware('auth:api')->prefix('v1')->group(function () {});
+    Route::apiResource('branches', BranchController::class);
+    Route::prefix('branches')->group(function () {
+        Route::delete('{id}/force', [BranchController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [BranchController::class, 'restore']);
+        Route::patch('{id}/activate', [BranchController::class, 'activateBranch']);
+        Route::patch('{id}/deactivate', [BranchController::class, 'deactivateBranch']);
+        Route::patch('{id}/set-main', [BranchController::class, 'setAsMainBranch']);
+        Route::get('organization/{organizationId}', [BranchController::class, 'getByOrganization']);
+    });
+
+    Route::apiResource('main-categories', MainCategoryController::class);
+    Route::prefix('main-categories')->group(function () {
+        Route::delete('{id}/force', [MainCategoryController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [MainCategoryController::class, 'restore']);
+        Route::patch('{id}/activate', [MainCategoryController::class, 'activateMainCategory']);
+        Route::patch('{id}/deactivate', [MainCategoryController::class, 'deactivateMainCategory']);
+        Route::get('active/list', [MainCategoryController::class, 'getActiveCategories']);
+    });
+});
