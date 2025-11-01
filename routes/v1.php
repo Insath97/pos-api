@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AuthController;
-use App\Http\Controllers\V1\branchController;
+use App\Http\Controllers\V1\BranchController;
 use App\Http\Controllers\V1\BrandController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\OrganizationController;
