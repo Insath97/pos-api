@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\BrandController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\SubCategoryController;
+use App\Http\Controllers\V1\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -64,5 +65,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [BrandController::class, 'activateBrand']);
         Route::patch('{id}/deactivate', [BrandController::class, 'deactivateBrand']);
         Route::get('active/list', [BrandController::class, 'getActiveBrands']);
+    });
+
+    Route::apiResource('suppliers', SupplierController::class);
+    Route::prefix('suppliers')->group(function () {
+        Route::delete('{id}/force', [SupplierController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [SupplierController::class, 'restore']);
+        Route::patch('{id}/activate', [SupplierController::class, 'activateSupplier']);
+        Route::patch('{id}/deactivate', [SupplierController::class, 'deactivateSupplier']);
+        Route::get('active/list', [SupplierController::class, 'getActiveSuppliers']);
     });
 });
