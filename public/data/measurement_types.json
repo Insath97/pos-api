@@ -1,0 +1,34 @@
+{
+    "types": [
+        {
+            "id": 1,
+            "value": "weight",
+            "label": "Weight"
+        },
+        {
+            "id": 2,
+            "value": "volume",
+            "label": "Volume"
+        },
+        {
+            "id": 3,
+            "value": "length",
+            "label": "Length"
+        },
+        {
+            "id": 4,
+            "value": "count",
+            "label": "Count"
+        },
+        {
+            "id": 5,
+            "value": "area",
+            "label": "Area"
+        },
+        {
+            "id": 6,
+            "value": "time",
+            "label": "Time"
+        }
+    ]
+}

@@ -4,6 +4,7 @@ use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\BranchController;
 use App\Http\Controllers\V1\BrandController;
 use App\Http\Controllers\V1\MainCategoryController;
+use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
@@ -84,5 +85,17 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [UnitController::class, 'activateUnit']);
         Route::patch('{id}/deactivate', [UnitController::class, 'deactivateUnit']);
         Route::get('active/list', [UnitController::class, 'getActiveUnits']);
+    });
+
+    Route::get('measurement-types', [MeasurementUnitController::class, 'getTypes']);
+    Route::get('/measurement-types/{id}', [MeasurementUnitController::class, 'getType']);
+
+    Route::apiResource('measurement-units', MeasurementUnitController::class);
+    Route::prefix('measurement-units')->group(function () {
+        Route::delete('{id}/force', [MeasurementUnitController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [MeasurementUnitController::class, 'restore']);
+        Route::patch('{id}/activate', [MeasurementUnitController::class, 'activateMeasurementUnit']);
+        Route::patch('{id}/deactivate', [MeasurementUnitController::class, 'deactivateMeasurementUnit']);
+        Route::get('active/list', [MeasurementUnitController::class, 'getActiveMeasurementUnits']);
     });
 });
