@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\AuthController;
 use App\Http\Controllers\V1\BranchController;
 use App\Http\Controllers\V1\BrandController;
+use App\Http\Controllers\V1\ContainerController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
@@ -97,5 +98,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [MeasurementUnitController::class, 'activateMeasurementUnit']);
         Route::patch('{id}/deactivate', [MeasurementUnitController::class, 'deactivateMeasurementUnit']);
         Route::get('active/list', [MeasurementUnitController::class, 'getActiveMeasurementUnits']);
+    });
+
+    Route::apiResource('containers', ContainerController::class);
+    Route::prefix('containers')->group(function () {
+        Route::delete('{id}/force', [ContainerController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [ContainerController::class, 'restore']);
+        Route::patch('{id}/activate', [ContainerController::class, 'activateContainer']);
+        Route::patch('{id}/deactivate', [ContainerController::class, 'deactivateContainer']);
+        Route::get('active/list', [ContainerController::class, 'getActiveContainers']);
     });
 });

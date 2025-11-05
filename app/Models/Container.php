@@ -6,28 +6,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class Container extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
         'slug',
-        'short_code',
-        'is_active',
-        'is_base_unit',
         'description',
+        'base_unit_id',
+        'measurement_unit_id',
+        'capacity',
+        'is_active',
+        'description'
     ];
 
     protected $casts = [
+        'capacity' => 'decimal:4',
         'is_active' => 'boolean',
-        'is_base_unit' => 'boolean',
         'deleted_at' => 'datetime'
     ];
 
-    public function containers()
+    public function baseUnit()
     {
-        return $this->hasMany(Container::class);
+        return $this->belongsTo(Unit::class, 'base_unit_id');
+    }
+
+    public function measurementUnit()
+    {
+        return $this->belongsTo(MeasurementUnit::class, 'measurement_unit_id');
     }
 
     public function scopeActive($query)

@@ -24,6 +24,11 @@ class MeasurementUnit extends Model
         'deleted_at' => 'datetime'
     ];
 
+    public function containers()
+    {
+        return $this->hasMany(Container::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
