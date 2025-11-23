@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -88,5 +88,28 @@ class User extends Authenticatable implements JWTSubject
             'last_login_at' => now(),
             'last_login_ip' => $ipAddress
         ]);
+    }
+
+    public function isSuperAdmin()
+    {
+        return is_null($this->organization_id) && is_null($this->branch_id);
+    }
+
+    public function canAccessOrganization($organizationId)
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        return $this->organization_id == $organizationId;
+    }
+
+    public function canAccessBranch($branchId)
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        return $this->branch_id == $branchId;
     }
 }

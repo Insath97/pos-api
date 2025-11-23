@@ -7,6 +7,7 @@ use App\Http\Controllers\V1\ContainerController;
 use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
+use App\Http\Controllers\V1\PermissionController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
 use App\Http\Controllers\V1\UnitController;
@@ -21,6 +22,8 @@ Route::prefix('v1')->group(function () {
 Route::middleware('auth:api')->prefix('v1')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('permissions', PermissionController::class);
 
     Route::apiResource('organizations', OrganizationController::class);
     Route::prefix('organizations')->group(function () {
@@ -89,7 +92,7 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     });
 
     Route::get('measurement-types', [MeasurementUnitController::class, 'getTypes']);
-    Route::get('/measurement-types/{id}', [MeasurementUnitController::class, 'getType']);
+    Route::get('measurement-types/{id}', [MeasurementUnitController::class, 'getType']);
 
     Route::apiResource('measurement-units', MeasurementUnitController::class);
     Route::prefix('measurement-units')->group(function () {

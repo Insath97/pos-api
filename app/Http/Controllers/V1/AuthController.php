@@ -67,7 +67,7 @@ class AuthController extends Controller
                     'user' => $user,
                     'auth_token' => $token,
                     'token_type' => 'bearer',
-                    'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
+                    'expires_in' => config('jwt.ttl') * 60
                 ]
             ], 200)->cookie($cookie);
         } catch (\Throwable $th) {
