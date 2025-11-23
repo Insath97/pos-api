@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\PermissionController;
+use App\Http\Controllers\V1\RoleController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
 use App\Http\Controllers\V1\UnitController;
@@ -24,6 +25,8 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::apiResource('permissions', PermissionController::class);
+
+    Route::apiResource('roles', RoleController::class);
 
     Route::apiResource('organizations', OrganizationController::class);
     Route::prefix('organizations')->group(function () {
