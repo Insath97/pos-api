@@ -100,4 +100,41 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function me()
+    {
+        try {
+            $user = auth('api')->user();
+
+            $user->load(['roles' => function ($query) {
+                $query->select('id', 'name')
+                    ->with(['permissions' => function ($query) {
+                        $query->select('id', 'name');
+                    }]);
+            }]);
+
+            if ($user->relationLoaded('roles')) {
+                $user->roles->each->makeHidden(['pivot']);
+                $user->roles->each(function ($role) {
+                    if ($role->relationLoaded('permissions')) {
+                        $role->permissions->each->makeHidden(['pivot']);
+                    }
+                });
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User details fetched successfully',
+                'data' => [
+                    'user' => $user
+                ]
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch user details',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

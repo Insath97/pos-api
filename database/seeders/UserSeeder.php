@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -13,7 +15,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $role = Role::firstOrCreate(['guard_name' => 'api', 'name' => 'Super Admin']);
+
+        $allPermissions = Permission::all();
+        $role->syncPermissions($allPermissions);
+
+        $user = User::create([
             'name' => 'Development Admin',
             'profile_image' => '/image',
             'email' => 'dev@localhost.com',
@@ -23,6 +30,8 @@ class UserSeeder extends Seeder
             'is_active' => true,
             'can_login' => true,
         ]);
+
+        $user->assignRole('Super Admin');
 
         $this->command->info('Development admin user created!');
         $this->command->info('Email: dev@localhost.com');
