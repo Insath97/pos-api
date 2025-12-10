@@ -28,6 +28,11 @@ class SubCategory extends Model
         return $this->belongsTo(MainCategory::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'sub_category_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

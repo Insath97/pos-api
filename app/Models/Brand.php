@@ -34,6 +34,11 @@ class Brand extends Model
             ->orWhere('slug', 'LIKE', "%{$search}%");
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function activate()
     {
         $this->update(['is_active' => true]);

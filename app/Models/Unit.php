@@ -30,6 +30,11 @@ class Unit extends Model
         return $this->hasMany(Container::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'unit_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

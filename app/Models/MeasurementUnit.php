@@ -29,6 +29,11 @@ class MeasurementUnit extends Model
         return $this->hasMany(Container::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'measurement_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

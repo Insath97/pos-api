@@ -37,6 +37,11 @@ class Container extends Model
         return $this->belongsTo(MeasurementUnit::class, 'measurement_unit_id');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'container_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

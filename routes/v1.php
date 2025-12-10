@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\MainCategoryController;
 use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\PermissionController;
+use App\Http\Controllers\V1\ProductController;
 use App\Http\Controllers\V1\RoleController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
@@ -125,5 +126,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [ContainerController::class, 'activateContainer']);
         Route::patch('{id}/deactivate', [ContainerController::class, 'deactivateContainer']);
         Route::get('active/list', [ContainerController::class, 'getActiveContainers']);
+    });
+
+    Route::apiResource('products', ProductController::class);
+    Route::prefix('products')->group(function () {
+        Route::delete('{id}/force', [ProductController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [ProductController::class, 'restore']);
+        Route::patch('{id}/activate', [ProductController::class, 'activateProduct']);
+        Route::patch('{id}/deactivate', [ProductController::class, 'deactivateProduct']);
+        Route::get('active/list', [ProductController::class, 'getActiveProducts']);
     });
 });
