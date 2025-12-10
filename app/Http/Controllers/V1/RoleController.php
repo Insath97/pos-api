@@ -206,4 +206,33 @@ class RoleController extends Controller
             ], 500);
         }
     }
+
+    public function getAvailableRoles()
+    {
+        try {
+            $user = auth('api')->user();
+
+            $query = Role::query();
+
+            if (!$user->isSuperAdmin() && $user->hasRole('Super Admin')) {
+                $query->where('name', '!=', 'Super Admin');
+            }
+
+            $query->where('guard_name', 'api');
+
+            $roles = $query->select('id', 'name', 'guard_name')->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Roles retrieved successfully',
+                'data' => $roles
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to retrieve roles',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
 }
