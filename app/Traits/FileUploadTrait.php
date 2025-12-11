@@ -27,7 +27,7 @@ trait FileUploadTrait
 
         // Generate filename with optional prefix
         $fileName = $prefix
-            ? $prefix . '_' . Str::random(20) . '.' . $extension
+            ? $prefix . '.' . $extension
             : Str::random(25) . '.' . $extension;
 
         $directory = "uploads/{$module}";

@@ -9,6 +9,7 @@ use App\Http\Controllers\V1\MeasurementUnitController;
 use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\PermissionController;
 use App\Http\Controllers\V1\ProductController;
+use App\Http\Controllers\V1\ProductVariantController;
 use App\Http\Controllers\V1\RoleController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
@@ -135,5 +136,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [ProductController::class, 'activateProduct']);
         Route::patch('{id}/deactivate', [ProductController::class, 'deactivateProduct']);
         Route::get('active/list', [ProductController::class, 'getActiveProducts']);
+    });
+
+    Route::apiResource('products/{product_id}/variants', ProductVariantController::class);
+    Route::prefix('products/{product_id}/variants')->group(function () {
+        Route::delete('{id}/force', [ProductVariantController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [ProductVariantController::class, 'restore']);
+        Route::patch('{id}/activate', [ProductVariantController::class, 'activate']);
+        Route::patch('{id}/deactivate', [ProductVariantController::class, 'deactivate']);
+        Route::patch('{id}/set-default', [ProductVariantController::class, 'setAsDefault']);
     });
 });

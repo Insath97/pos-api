@@ -83,6 +83,25 @@ class PermissionsSeeder extends Seeder
             ['name' => 'Unit Create', 'group_name' => 'Unit Management Permissions'],
             ['name' => 'Unit Update', 'group_name' => 'Unit Management Permissions'],
             ['name' => 'Unit Delete', 'group_name' => 'Unit Management Permissions'],
+
+            /* Product Management */
+            ['name' => 'Product Index',  'group_name' => 'Product Management Permissions'],
+            ['name' => 'Product Create', 'group_name' => 'Product Management Permissions'],
+            ['name' => 'Product Update', 'group_name' => 'Product Management Permissions'],
+            ['name' => 'Product Delete', 'group_name' => 'Product Management Permissions'],
+
+            /* Product Variant Management */
+            ['name' => 'Product Variant Index',  'group_name' => 'Product Variant Management Permissions'],
+            ['name' => 'Product Variant Create', 'group_name' => 'Product Variant Management Permissions'],
+            ['name' => 'Product Variant Update', 'group_name' => 'Product Variant Management Permissions'],
+            ['name' => 'Product Variant Delete', 'group_name' => 'Product Variant Management Permissions'],
+
+            /* Purchase Order Management */
+            ['name' => 'Purchase Order Index',  'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Create', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Update', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Delete', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Approve', 'group_name' => 'Purchase Order Management Permissions'],
         ];
 
         foreach ($permissions as $permission) {

@@ -66,9 +66,24 @@ class Product extends Model
         return $this->hasMany(ProductAuditLog::class)->orderBy('created_at', 'desc');
     }
 
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function defaultVariant()
+    {
+        return $this->hasOne(ProductVariant::class)->where('is_default', true);
+    }
+
+    public function activeVariants()
+    {
+        return $this->hasMany(ProductVariant::class)->where('is_active', true);
+    }
+
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->with('variants')->where('is_active', true);
     }
 
     public function scopeSearch($query, $search)
