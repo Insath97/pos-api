@@ -101,7 +101,11 @@ class PermissionsSeeder extends Seeder
             ['name' => 'Purchase Order Create', 'group_name' => 'Purchase Order Management Permissions'],
             ['name' => 'Purchase Order Update', 'group_name' => 'Purchase Order Management Permissions'],
             ['name' => 'Purchase Order Delete', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Restore', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Force Delete', 'group_name' => 'Purchase Order Management Permissions'],
             ['name' => 'Purchase Order Approve', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Cancel', 'group_name' => 'Purchase Order Management Permissions'],
+            ['name' => 'Purchase Order Submit', 'group_name' => 'Purchase Order Management Permissions'],
         ];
 
         foreach ($permissions as $permission) {

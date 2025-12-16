@@ -10,6 +10,7 @@ use App\Http\Controllers\V1\OrganizationController;
 use App\Http\Controllers\V1\PermissionController;
 use App\Http\Controllers\V1\ProductController;
 use App\Http\Controllers\V1\ProductVariantController;
+use App\Http\Controllers\V1\PurchaseOrderController;
 use App\Http\Controllers\V1\RoleController;
 use App\Http\Controllers\V1\SubCategoryController;
 use App\Http\Controllers\V1\SupplierController;
@@ -145,5 +146,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
         Route::patch('{id}/activate', [ProductVariantController::class, 'activate']);
         Route::patch('{id}/deactivate', [ProductVariantController::class, 'deactivate']);
         Route::patch('{id}/set-default', [ProductVariantController::class, 'setAsDefault']);
+    });
+
+    Route::apiResource('purchase-orders', PurchaseOrderController::class);
+    Route::prefix('purchase-orders')->group(function () {
+        Route::delete('{id}/force', [PurchaseOrderController::class, 'forceDestroy']);
+        Route::patch('{id}/restore', [PurchaseOrderController::class, 'restore']);
+        Route::patch('{id}/submit', [PurchaseOrderController::class, 'submit']);
+        Route::patch('{id}/approve', [PurchaseOrderController::class, 'approve']);
+        Route::patch('{id}/cancel', [PurchaseOrderController::class, 'cancel']);
     });
 });
